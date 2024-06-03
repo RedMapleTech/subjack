@@ -40,10 +40,8 @@ func detect(url, output string, ssl, verbose, manual bool, timeout int, config [
 	service := Identify(url, ssl, manual, timeout, config)
 
 	if service != "" {
-		result := fmt.Sprintf("[%s] %s\n", service, url)
-		c := fmt.Sprintf("\u001b[32;1m%s\u001b[0m", service)
-		out := strings.Replace(result, service, c, -1)
-		fmt.Printf(out)
+		result := fmt.Sprintf("[VULNERABLE:%s] %s\n", service, url)
+		fmt.Print(result)
 
 		if output != "" {
 			if chkJSON(output) {
@@ -55,10 +53,8 @@ func detect(url, output string, ssl, verbose, manual bool, timeout int, config [
 	}
 
 	if service == "" && verbose {
-		result := fmt.Sprintf("[Not Vulnerable] %s\n", url)
-		c := "\u001b[31;1mNot Vulnerable\u001b[0m"
-		out := strings.Replace(result, "Not Vulnerable", c, -1)
-		fmt.Printf(out)
+		result := fmt.Sprintf("[NOT_VULNERABLE] %s\n", url)
+		fmt.Print(result)
 
 		if output != "" {
 			if chkJSON(output) {
@@ -96,7 +92,7 @@ IDENTIFY:
 			// Check if we can register this domain.
 			dead := available.Domain(cname)
 			if dead {
-				service = "DOMAIN AVAILABLE - " + cname
+				service = "DOMAIN_AVAILABLE:" + cname
 				break IDENTIFY
 			}
 
@@ -112,7 +108,7 @@ IDENTIFY:
 
 			// Option to always print the CNAME and not check if it's available to be registered.
 			if manual && !dead && cname != "" {
-				service = "DEAD DOMAIN - " + cname
+				service = "DOMAIN_DEAD:" + cname
 				break IDENTIFY
 			}
 		}

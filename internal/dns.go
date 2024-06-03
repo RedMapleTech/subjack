@@ -20,10 +20,8 @@ func (s *Subdomain) dns(o *Options) {
 		}
 
 		if o.Verbose {
-			result := fmt.Sprintf("[Not Vulnerable] %s\n", s.Url)
-			c := "\u001b[31;1mNot Vulnerable\u001b[0m"
-			out := strings.Replace(result, "Not Vulnerable", c, -1)
-			fmt.Printf(out)
+			result := fmt.Sprintf("[NOT_VULNERABLE] %s\n", s.Url)
+			fmt.Print(result)
 
 			if o.Output != "" {
 				if chkJSON(o.Output) {
