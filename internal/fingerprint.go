@@ -100,7 +100,7 @@ IDENTIFY:
 			if fingerprints[f].Nxdomain {
 				for n := range fingerprints[f].Cname {
 					if strings.Contains(cname, fingerprints[f].Cname[n]) {
-						service = strings.ToUpper(fingerprints[f].Service)
+						service = fingerprints[f].Service
 						break IDENTIFY
 					}
 				}
@@ -116,7 +116,7 @@ IDENTIFY:
 		// Check if body matches fingerprinted response
 		for n := range fingerprints[f].Fingerprint {
 			if bytes.Contains(body, []byte(fingerprints[f].Fingerprint[n])) {
-				service = strings.ToUpper(fingerprints[f].Service)
+				service = fingerprints[f].Service
 				break
 			}
 		}
