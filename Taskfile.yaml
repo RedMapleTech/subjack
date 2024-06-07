@@ -1,0 +1,16 @@
+# https://taskfile.dev
+
+version: "3"
+
+env:
+  CREDS:
+    sh: cat ~/.config/gcloud/application_default_credentials.json
+  DOCKER_BUILDKIT: "1"
+  COMPOSE_DOCKER_CLI_BUILD: "1"
+
+tasks:
+  build:
+    desc: Build the container
+    cmds:
+      - GOOS=linux GOARCH=amd64 go build -o ./build/subjack-linux-amd64
+      - GOOS=darwin GOARCH=amd64 go build -o ./build/subjack-darwin-amd64
